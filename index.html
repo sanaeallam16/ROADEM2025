@@ -158,6 +158,15 @@ thead::after{content:"";position:sticky;top:0;display:block;height:0;box-shadow:
 tbody td{padding:var(--row-pad) 14px;border-bottom:1px solid var(--line);background:var(--paper);transition:background .18s ease}
 tbody tr:nth-child(odd) td{background:#fbfdff}
 tbody tr:hover td{background:var(--blue-050)}
+
+
+/* Aligner le Jour 1 sur la largeur "Type" du Jour 2 */
+#j1 table th[data-col="type"],
+#j1 table td[data-col="type"]{
+  width: 120px;        /* Mets la même valeur que Jour 2 */
+  white-space: nowrap; /* évite les retours qui dilatent la colonne */
+}
+
 /* Sticky first column */
 thead th:first-child, tbody td:first-child{
   position:sticky; left:0; z-index:2; width:var(--hour-col);
@@ -167,7 +176,7 @@ thead th:first-child, tbody td:first-child{
 /* Cell internals */
 .cell{display:grid;gap:3px}
 .cell .title{font-weight:800;letter-spacing:-.01em}
-.cell .sub{color:var(--muted);font-weight:600;font-size:13px}
+.cell .sub{color:var(--muted);font-weight:600;font-size:15px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 .tag{font-size:11px;font-weight:800;padding:4px 8px;border-radius:999px;background:#eef2ff;color:var(--blue-700)}
 .room{font-weight:800}
@@ -270,6 +279,49 @@ tbody tr{break-inside:avoid; page-break-inside:avoid}
   tr,td,th{page-break-inside:avoid; break-inside:avoid}
   .day + .day{page-break-before:always}
 }
+
+/* ===== Speaker photo style ===== */
+.speaker-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.speaker-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--line);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+.topic {
+  font-size: 12.8px;
+  font-weight: 600;
+  font-style: italic;
+  /*color: #374151; */             /* gris foncé sobre */
+  /*background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);*/
+  border-left: 3px solid var(--primary-600);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+.topic b {
+  font-weight: 700;
+  color: var(--primary-600);
+  font-style: normal;
+}
+
   </style>
 
   <!-- Print overrides injected by JS -->
@@ -363,34 +415,79 @@ tbody tr{break-inside:avoid; page-break-inside:avoid}
               <td data-label="Activité" data-col="activity" colspan="2" style="text-align:center"><div class="cell"><div class="title">Pause-café</div></div></td>
             </tr>
             <tr data-type="pleniere">
-              <td data-label="Heure"><time datetime="2025-11-20T10:15">10:15 – 11:15</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière I</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Pr. Mark SEVAUX</span> (Université de Bretagne-Sud, Lorient, France)</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+  <td data-label="Heure"><time datetime="2025-11-20T10:15">10:15 – 11:15</time></td>
+  <td data-label="Type" data-col="type"><span class="type k-blue">Plénière I</span></td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/marc.jpeg" alt="Photo du conférencier" class="speaker-photo">
+        <span class="speaker">Pr. Mark SEVAUX</span> (Université de Bretagne-Sud, Lorient, France)
+      </div>
+      <div class="topic"> <b>Title:</b> Machine-Learning and Matheuristics for Urban Transportation</div>
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
+</tr>
+
             <tr data-type="pleniere">
               <td data-label="Heure"><time datetime="2025-11-20T11:15">11:15 – 12:15</time></td>
               <td data-label="Type" data-col="type"><span class="type k-blue">Plénière II</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Pr. Abdellatif EL AFIA</span> (ENSIAS, University Mohammed V, Rabat, Morocco)</div></div></td>
+              <td data-label="Activité" data-col="activity">
+                <div class="cell speaker-block">
+                  <div class="title">Conférence</div>
+                  <div class="sub">
+                    <img src="./images/afia.jpeg" alt="Photo du conférencier" class="speaker-photo">
+                    <span class="speaker">Pr. Abdellatif EL AFIA</span> (ENSIAS, University Mohammed V, Rabat, Morocco)
+                  </div>
+                </div>
+              </td>
               <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
             </tr>
+
             <tr data-type="pleniere">
-              <td data-label="Heure"><time datetime="2025-11-20T12:15">12:15 – 13:15</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière III</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Conférencier professionnel</span> du TAQA Maroc</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+  <td data-label="Heure">
+    <time datetime="2025-11-20T12:15">12:15 – 13:15</time>
+  </td>
+  <td data-label="Type" data-col="type">
+    <span class="type k-blue">Plénière III</span>
+  </td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/taqa.jpg" alt="Photo du conférencier TAQA Maroc" class="speaker-photo">
+        <span class="speaker">Conférencier professionnel</span> du TAQA Maroc
+      </div>
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room">
+    <span class="room">Amphi A</span>
+  </td>
+</tr>
+
             <tr data-type="pause">
               <td data-label="Heure"><time datetime="2025-11-20T13:15">13:15 – 14:20</time></td>
               <td data-label="Type" data-col="type"><span class="type k-orange">Pause</span></td>
               <td data-label="Activité" data-col="activity" colspan="2" style="text-align:center"><div class="cell"><div class="title">Déjeuner</div></div></td>
             </tr>
-            <tr data-type="session">
-              <td data-label="Heure"><time datetime="2025-11-20T14:20">14:20 – 15:20</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière IV</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Mr. Noredine EL KINANI</span> (FOUNDER &amp; CEO chez DIGITAL HOUSE GROUP)</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+            <tr data-type="pleniere">
+  <td data-label="Heure"><time datetime="2025-11-20T14:20">14:20 – 15:20</time></td>
+  <td data-label="Type" data-col="type"><span class="type k-blue">Plénière IV</span></td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/kinani.jpeg" alt="Photo du conférencier" class="speaker-photo">
+        <span class="speaker">Mr. Noredine EL KINANI</span> 
+        (FOUNDER &amp; CEO chez DIGITAL HOUSE GROUP, Vélizy-Villacoublay, France)
+      </div>
+      <div class="topic"> <b>Title :</b> Leadership and Digital Innovation in Smart Enterprises</div>
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
+</tr>
+
             <tr data-type="poster pause">
               <td data-label="Heure"><time datetime="2025-11-20T15:00">15:20 – 15:45</time></td>
               <td data-label="Type" data-col="type"><span class="type k-green">Table ronde</span></td>
@@ -451,17 +548,52 @@ tbody tr{break-inside:avoid; page-break-inside:avoid}
             </tr>
 
               <tr data-type="pleniere">
-              <td data-label="Heure"><time datetime="2025-11-21T08:30">09:00 – 10:00</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière I</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Pr. M-Lounes BENTAHA</span> (Lumière University Lyon II, France)</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+  <td data-label="Heure">
+    <time datetime="2025-11-21T08:30">09:00 – 10:00</time>
+  </td>
+  <td data-label="Type" data-col="type">
+    <span class="type k-blue">Plénière I</span>
+  </td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/lounes.jpeg" alt="Photo du conférencier" class="speaker-photo">
+        <span class="speaker">M.-Lounes BENTAHA</span>
+        (Associate Professor, Lecturer-Researcher, Lumière University Lyon II, France)
+      </div>
+      <div class="topic">
+         <b>Title :</b> A Stochastic Programming Framework for Decision Support under Uncertainty in Disassembly System Operations
+      </div>
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room">
+    <span class="room">Amphi A</span>
+  </td>
+</tr>
+
             <tr data-type="pleniere">
-              <td data-label="Heure"><time datetime="2025-11-21T09:00">10:00 – 11:00</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière II</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Pr. Karim ZKIK</span> (HDR – Rennes School of Business / Rennes, Bretagne, France)</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+  <td data-label="Heure">
+    <time datetime="2025-11-21T09:00">10:00 – 11:00</time>
+  </td>
+  <td data-label="Type" data-col="type">
+    <span class="type k-blue">Plénière II</span>
+  </td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/zkik.jpg" alt="Photo du conférencier" class="speaker-photo">
+        <span class="speaker">Pr. Karim ZKIK</span> 
+        (HDR – Rennes School of Business / Rennes, Bretagne, France)
+      </div>
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room">
+    <span class="room">Amphi A</span>
+  </td>
+</tr>
+
             <tr data-type="pause">
               <td data-label="Heure"><time datetime="2025-11-21T09:45">11:00 – 11:15</time></td>
               <td data-label="Type" data-col="type"><span class="type k-orange">Pause</span></td>
@@ -482,7 +614,11 @@ tbody tr{break-inside:avoid; page-break-inside:avoid}
             <tr data-type="session">
               <td data-label="Heure"><time datetime="2025-11-21T11:00">12:00 – 12:30</time></td>
               <td data-label="Type" data-col="type"><span class="type k-green">Table ronde</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Table ronde</div></div></td>
+              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Table ronde</div>
+                <div class="topic">
+                  <b>Title :</b> Intelligent Optimization: How OR and AI Are Transforming Industry 4.0
+                </div>
+                </div></td>
               <td data-label="Salle" data-col="room"><span class="room">Amphi B</span></td>
             </tr>
             <tr data-type="pause">
@@ -491,11 +627,28 @@ tbody tr{break-inside:avoid; page-break-inside:avoid}
               <td data-label="Activité" data-col="activity" colspan="2" style="text-align:center"><div class="cell"><div class="title">Déjeuner</div></div></td>
             </tr>
             <tr data-type="pleniere">
-              <td data-label="Heure"><time datetime="2025-11-21T14:20">13:45 – 14:45</time></td>
-              <td data-label="Type" data-col="type"><span class="type k-blue">Plénière III</span></td>
-              <td data-label="Activité" data-col="activity"><div class="cell"><div class="title">Conférence</div><div class="sub"><span class="speaker">Pr. Ahmed EL HILALI ALAOUI</span> (Director, School of Digital Engineering &amp; AI, Euromed University, Fès)</div></div></td>
-              <td data-label="Salle" data-col="room"><span class="room">Amphi A</span></td>
-            </tr>
+  <td data-label="Heure">
+    <time datetime="2025-11-21T13:45">13:45 – 14:45</time>
+  </td>
+  <td data-label="Type" data-col="type">
+    <span class="type k-blue">Plénière III</span>
+  </td>
+  <td data-label="Activité" data-col="activity">
+    <div class="cell speaker-block">
+      <div class="title">Conférence</div>
+      <div class="sub">
+        <img src="./images/ahmed.jpeg" alt="Photo du conférencier" class="speaker-photo">
+        <span class="speaker">Pr. Ahmed EL HILALI ALAOUI</span> 
+        (Director of School of Digital Engineering and Artificial Intelligence, Euromed University, Fès)
+      </div>
+      
+    </div>
+  </td>
+  <td data-label="Salle" data-col="room">
+    <span class="room">Amphi A</span>
+  </td>
+</tr>
+
             <tr data-type="pause">
               <td data-label="Heure"><time datetime="2025-11-21T15:45">14:45 – 15:00</time></td>
               <td data-label="Type" data-col="type"><span class="type k-orange">Interpause</span></td>
